@@ -18,9 +18,13 @@
     .echo { z-index: var(--z); color: var(--color); opacity: 0; transform: scale(.98); }
     .face { position: relative; z-index: 10; color: #dcff55; }
     .type:is(:hover, :focus-visible, .active) .words { font-weight: 800; }
-    .type:is(:hover, :focus-visible, .active) .echo { color: var(--pink); opacity: 1; transform: scale(var(--scale)); transition-delay: var(--delay); }
-    .type:is(:hover, :focus-visible, .active) .face { color: #ff8cdb; transform: scale(1.025); }
+    .type:is(:hover, :focus-visible, .active) .echo { opacity: 1; transform: scale(var(--scale)); transition-delay: var(--delay); }
+    .type:is(:hover, :focus-visible, .active) .face { transform: scale(1.025); }
     .type:focus-visible { outline: 1px solid #dcff55; outline-offset: 12px; border-radius: 8px; }
+    .pink-overlay { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; z-index: 20; opacity: 0; -webkit-mask-image: radial-gradient(circle 95px at var(--cursor-x, 50%) var(--cursor-y, 50%), #000 0%, #000 65%, transparent 100%); mask-image: radial-gradient(circle 95px at var(--cursor-x, 50%) var(--cursor-y, 50%), #000 0%, #000 65%, transparent 100%); }
+    .type.pointer-on .pink-overlay { opacity: 1; }
+    .pink-overlay .echo { color: var(--pink); }
+    .pink-overlay .face { color: #ff8cdb; }
     .hint { position: fixed; bottom: 28px; left: 0; width: 100%; text-align: center; color: #747b64; font: 10px/1.5 ui-monospace, monospace; letter-spacing: .2em; text-transform: uppercase; pointer-events: none; }
     @media (max-width: 600px) { .words { font-size: 17vw; } .hint { bottom: 22px; } }
     @media (prefers-reduced-motion: reduce) { .words { transition: none; } }
@@ -41,6 +45,24 @@
   <div class="hint">hover to get louder · tap to hold</div>
   <script>
     const type = document.querySelector('.type');
+    // Pink is a masked copy: the green typography stays visible everywhere else.
+    const pinkOverlay = document.createElement('span');
+    pinkOverlay.className = 'pink-overlay';
+    pinkOverlay.setAttribute('aria-hidden', 'true');
+    for (const word of type.querySelectorAll('.words')) {
+      pinkOverlay.append(word.cloneNode(true));
+    }
+    type.append(pinkOverlay);
+    const trackPointer = event => {
+      const bounds = type.getBoundingClientRect();
+      type.style.setProperty('--cursor-x', (event.clientX - bounds.left) + 'px');
+      type.style.setProperty('--cursor-y', (event.clientY - bounds.top) + 'px');
+      type.classList.add('pointer-on');
+    };
+    type.addEventListener('pointerenter', trackPointer);
+    type.addEventListener('pointermove', trackPointer);
+    type.addEventListener('pointerleave', () => type.classList.remove('pointer-on'));
+    type.addEventListener('pointercancel', () => type.classList.remove('pointer-on'));
     type.addEventListener('click', () => {
       const active = type.classList.toggle('active');
       type.setAttribute('aria-pressed', String(active));
