@@ -13,13 +13,13 @@
     body { color: #deff59; }
     main { min-height: 100svh; display: grid; place-items: center; overflow: hidden; padding: 7vw; }
     .type { position: relative; isolation: isolate; display: grid; place-items: center; width: 100%; min-height: 70svh; border: 0; padding: 0; background: transparent; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    .words { grid-area: 1 / 1; font-family: Supergolf, sans-serif; font-weight: 400; font-size: clamp(45px, 12vw, 210px); line-height: .88; letter-spacing: -.035em; text-align: center; white-space: nowrap; transition: font-weight 850ms cubic-bezier(.16,1,.3,1), transform 850ms cubic-bezier(.16,1,.3,1), opacity 600ms ease; pointer-events: none; }
+    .words { grid-area: 1 / 1; font-family: Supergolf, sans-serif; font-weight: 400; font-size: clamp(45px, 12vw, 210px); line-height: .88; letter-spacing: -.035em; text-align: center; white-space: nowrap; transition: font-weight 850ms cubic-bezier(.16,1,.3,1), transform 850ms cubic-bezier(.16,1,.3,1), opacity 600ms ease, color 850ms ease; pointer-events: none; }
     .words span { display: block; }
     .echo { z-index: var(--z); color: var(--color); opacity: 0; transform: scale(.98); }
     .face { position: relative; z-index: 10; color: #dcff55; }
     .type:is(:hover, :focus-visible, .active) .words { font-weight: 800; }
-    .type:is(:hover, :focus-visible, .active) .echo { opacity: 1; transform: scale(var(--scale)); transition-delay: var(--delay); }
-    .type:is(:hover, :focus-visible, .active) .face { transform: scale(1.025); }
+    .type:is(:hover, :focus-visible, .active) .echo { color: var(--pink); opacity: 1; transform: scale(var(--scale)); transition-delay: var(--delay); }
+    .type:is(:hover, :focus-visible, .active) .face { color: #ff8cdb; transform: scale(1.025); }
     .type:focus-visible { outline: 1px solid #dcff55; outline-offset: 12px; border-radius: 8px; }
     .hint { position: fixed; bottom: 28px; left: 0; width: 100%; text-align: center; color: #747b64; font: 10px/1.5 ui-monospace, monospace; letter-spacing: .2em; text-transform: uppercase; pointer-events: none; }
     @media (max-width: 600px) { .words { font-size: 17vw; } .hint { bottom: 22px; } }
@@ -29,12 +29,12 @@
 <body>
   <main>
     <button class="type" type="button" aria-label="bigger, louder — tap to toggle radiating type" aria-pressed="false">
-      <span class="words echo" aria-hidden="true" style="--z:1;--color:#092713;--scale:1.60;--delay:150ms"><span>bigger,</span><span>louder</span></span>
-      <span class="words echo" aria-hidden="true" style="--z:2;--color:#105027;--scale:1.49;--delay:120ms"><span>bigger,</span><span>louder</span></span>
-      <span class="words echo" aria-hidden="true" style="--z:3;--color:#197c32;--scale:1.38;--delay:90ms"><span>bigger,</span><span>louder</span></span>
-      <span class="words echo" aria-hidden="true" style="--z:4;--color:#36aa31;--scale:1.27;--delay:60ms"><span>bigger,</span><span>louder</span></span>
-      <span class="words echo" aria-hidden="true" style="--z:5;--color:#70d532;--scale:1.17;--delay:30ms"><span>bigger,</span><span>louder</span></span>
-      <span class="words echo" aria-hidden="true" style="--z:6;--color:#aff03d;--scale:1.09;--delay:0ms"><span>bigger,</span><span>louder</span></span>
+      <span class="words echo" aria-hidden="true" style="--z:1;--color:#092713;--pink:#30051c;--scale:1.60;--delay:150ms"><span>bigger,</span><span>louder</span></span>
+      <span class="words echo" aria-hidden="true" style="--z:2;--color:#105027;--pink:#5a0a35;--scale:1.49;--delay:120ms"><span>bigger,</span><span>louder</span></span>
+      <span class="words echo" aria-hidden="true" style="--z:3;--color:#197c32;--pink:#8e0e51;--scale:1.38;--delay:90ms"><span>bigger,</span><span>louder</span></span>
+      <span class="words echo" aria-hidden="true" style="--z:4;--color:#36aa31;--pink:#c81473;--scale:1.27;--delay:60ms"><span>bigger,</span><span>louder</span></span>
+      <span class="words echo" aria-hidden="true" style="--z:5;--color:#70d532;--pink:#f12594;--scale:1.17;--delay:30ms"><span>bigger,</span><span>louder</span></span>
+      <span class="words echo" aria-hidden="true" style="--z:6;--color:#aff03d;--pink:#ff56b4;--scale:1.09;--delay:0ms"><span>bigger,</span><span>louder</span></span>
       <span class="words face" aria-hidden="true"><span>bigger,</span><span>louder</span></span>
     </button>
   </main>
